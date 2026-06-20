@@ -1,66 +1,72 @@
-import db from '../config/db.js';
+import { db } from '../config/db.js';
+import { queryInvoiceIndex, queryInvoiceShow } from '../src/utils/query.js';
 
-export const index = (req, res) => {
-    db.query('SELECT * FROM invoices ORDER BY id DESC', (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ results });
-    });
+
+
+
+/*
+INDEX
+*/
+export async function index(request, response) {
+    try {
+        const [result] = await db.query(queryInvoiceIndex);
+
+        response
+            .json({
+                error: null,
+                result: result
+            });
+
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: "Errore nell'esecuzione della richiesta",
+                result: null
+            });
+    }
+}
+
+
+
+/*
+SHOW
+*/
+export async function show(request, response) {
+    try {
+        const id = request.params.id;
+        const [result] = await db.execute(queryInvoiceShow, [id]);
+        //BISOGNA AGGIUNGERE UNA FUNZIONE DI NORMALIZZAZIONE DEI DATI
+        if (result.length === 0) {
+            response
+                .json({
+                    error: 'La fattura cercata non esiste',
+                    result: null
+                })
+        }
+        response
+            .json({
+                error: null,
+                result: result[0]
+            })
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: "Errore nell'esecuzione della richiesta",
+                result: null
+            });
+    }
 };
 
-export const show = (req, res) => {
 
-    const sql = `
-        SELECT
-            invoices.*,
 
-            users.name,
-            users.surname,
-            users.mail,
-            users.address,
-            users.phone,
 
-            products.id AS product_id,
-            products.name AS product_name,
-            products.price,
-            products.img,
 
-            product_invoice.qty,
-            product_invoice.paid
 
-        FROM invoices
-
-        JOIN users
-            ON users.id_invoice = invoices.id
-
-        JOIN product_invoice
-            ON product_invoice.id_invoice = invoices.id
-
-        JOIN products
-            ON products.id = product_invoice.id_product
-
-        WHERE invoices.id = ?
-    `;
-
-    db.query(sql, [req.params.id], (err, results) => {
-
-        if (err) {
-            return res.status(500).json({
-                error: err.message
-            });
-        }
-
-        if (results.length === 0) {
-            return res.status(404).json({
-                error: "Fattura non trovata"
-            });
-        }
-
-        res.status(200).json(results);
-
-    });
-
-};
-export const store = (req, res) => {
+/* export const store = (req, res) => {
     const { total_amount, status, shipping_cost, tracking_number, payment_method, user } = req.body;
 
     db.beginTransaction((err) => {
@@ -97,4 +103,4 @@ export const store = (req, res) => {
             }
         });
     });
-};
+}; */

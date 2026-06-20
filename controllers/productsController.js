@@ -1,16 +1,61 @@
-import db from '../config/db.js';
+import { db } from '../config/db.js';
+import { queryProductIndex, queryProductShow } from '../src/utils/query.js';
 
-export const index = (req, res) => {
-    db.query('SELECT id, name, description, slug, img, price, discount FROM products', (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ results });
-    });
+
+
+
+/*
+INDEX
+*/
+export async function index(request, response) {
+    try {
+        const [result] = await db.query(queryProductIndex);
+        response
+            .json({
+                error: null,
+                result: result
+            });
+
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: "Errore nell'esecuzione della richiesta",
+                result: null
+            });
+    }
 };
 
-export const show = (req, res) => {
-    db.query('SELECT * FROM products WHERE slug = ?', [req.params.slug], (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (results.length === 0) return res.status(404).json({ error: 'Prodotto non trovato' });
-        res.json({ results: results[0] });
-    });
+
+/*
+SHOW
+*/
+export async function show(request, response) {
+    try {
+        const slug = request.params.slug;
+        const [result] = await db.execute(queryProductShow, [slug]);
+        if (result.length === 0) {
+            response
+                .json({
+                    error: `Il prodotto cercato non esiste`,
+                    result: null
+                });
+            return
+        }
+        response
+            .json({
+                error: null,
+                result: result[0]
+            });
+
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: "Errore nell'esecuzione della richiesta",
+                result: null
+            });
+    }
 };

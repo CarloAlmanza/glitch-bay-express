@@ -1,21 +1,61 @@
-import db from '../config/db.js';
+import { db } from "../config/db.js";
+import { queryCatIndex, queryCatShow } from "../src/utils/query";
 
-export const index = (req, res) => {
-    db.query('SELECT id, name, description FROM categories', (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ results });
-    });
+
+
+
+
+/*
+INDEX
+*/
+async function index(request, response) {
+    try {
+        const [result] = await connection.query(queryCatIndex);
+        response
+            .json({
+                error: null,
+                result: result
+            });
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: `Errore nell'esecuzione della richiesta`,
+                result: null
+            })
+    }
+
 };
 
-export const show = (req, res) => {
-    db.query('SELECT * FROM categories WHERE name = ?', [req.params.name], (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (results.length === 0) return res.status(404).json({ error: 'Categoria non trovata' });
-        res.json({ results: results[0] });
-    });
+
+/*
+SHOW
+*/
+async function show(request, response) {
+    const id = request.params.id
+    try {
+        const [result] = await connection.execute(queryCatShow, [id]);
+        const catategory = result[0]
+
+        response
+            .json({
+                error: null,
+                result: catategory
+            });
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: `Errore nell'esecuzione della richiesta`,
+                result: null
+            });
+    }
+
 };
 
-export const getProducts = (req, res) => {
+/* export const getProducts = (req, res) => {
     const sql = `
         SELECT p.id, p.name, p.description, p.slug, p.img, p.price, p.discount
         FROM products p
@@ -27,4 +67,4 @@ export const getProducts = (req, res) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ results });
     });
-};
+}; */

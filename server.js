@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import db from './config/db.js';
+import {db} from './config/db.js';
 import productsRoutes from './routes/products.js';
 import categoriesRoutes from './routes/categories.js';
 import invoicesRoutes from './routes/invoices.js';
@@ -8,6 +8,7 @@ import usersRoutes from './routes/users.js';
 
 const app = express();
 const server_port = process.env.SERVER_PORT;
+const server_url = process.env.SERVER_URL;
 
 app.use(cors());
 app.use(express.json());
@@ -23,5 +24,5 @@ app.listen(server_port, (error) => {
         console.error(`ERRORE: la porta ${server_port} è già in utilizzo`);
         return;
     }
-    console.log(`🚀 Server running on http://localhost:${server_port}`);
+    console.log(`🚀 Server running on ${server_url}${server_port}`);
 });

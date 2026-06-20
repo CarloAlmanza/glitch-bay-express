@@ -1,9 +1,62 @@
-import db from '../config/db.js';
+import { db } from "../config/db.js";
+import { queryCatIndex, queryCatShow, queryUserShow } from "../src/utils/query";
 
-export const show = (req, res) => {
-    db.query('SELECT id, name, surname, mail, address, phone FROM users WHERE id = ?', [req.params.id], (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (results.length === 0) return res.status(404).json({ error: 'Utente non trovato' });
-        res.json({ results: results[0] });
-    });
+
+
+
+
+/*
+INDEX
+*/
+async function index(request, response) {
+    try {
+        const [result] = await connection.query(queryCatIndex);
+        response
+            .json({
+                error: null,
+                result: result
+            });
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: `Errore nell'esecuzione della richiesta`,
+                result: null
+            })
+    }
+
+};
+
+
+/*
+SHOW
+*/
+async function show(request, response) {
+    const id = request.params.id
+    try {
+        const [result] = await connection.execute(queryUserShow, [id]);
+        if(result.length === 0){
+            response
+                .json({
+                    error: `L'utente cercato non esiste`,
+                    result: null
+                });
+            return
+        }
+        response
+            .json({
+                error: null,
+                result: result[0]
+            });
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: `Errore nell'esecuzione della richiesta`,
+                result: null
+            });
+    }
+
 };
