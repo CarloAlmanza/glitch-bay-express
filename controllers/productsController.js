@@ -34,6 +34,8 @@ SHOW
 export async function show(request, response) {
     try {
         const slug = request.params.slug;
+        console.log(slug);
+        
         const [result] = await db.execute(queryProductShow, [slug]);
         if (result.length === 0) {
             response

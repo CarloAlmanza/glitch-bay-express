@@ -103,8 +103,8 @@ export const queryProductShow =
     JOIN product_category AS pc
         ON pc.id_product = products.id
     JOIN categories
-        ON categories.id = pc.id_category;
-    WHERE products.slug = ?
+        ON categories.id = pc.id_category
+    WHERE products.slug = ?;
     `
 
 
@@ -133,3 +133,7 @@ export const queryUserShow =
     FROM users 
     WHERE users.id = ?;
     `
+
+export const querySelectSlugs =
+    `SELECT p.slug
+    FROM products p;`

@@ -1,4 +1,4 @@
-import { db } from "../config/db.js";
+import { getSlugs } from "../src/utils/function.js";
 
 //lavoro con fake array di oggetti per le validazioni
 const productSlugs = [
@@ -36,10 +36,12 @@ const invoiceIds = [
 
 
 
-function validateIdSlug(req, res, next) {
+async function validateIdSlug(req, res, next) {
+    try {
     const baseUrl = (req.baseUrl).replace("/", ""); //prendo la base dell'url ovvero l'endpoint (es. products)
     const param = req.params;
     
+    const slugList = await getSlugs();
     
     
     if (baseUrl === "products") {
@@ -51,11 +53,15 @@ function validateIdSlug(req, res, next) {
             return;
         }
 
-        const result = productSlugs.filter(element => {
+
+        const found = slugList.filter(element => {
             return element.slug === param.slug;
         });
 
-        if (result.length === 0){
+        
+        
+
+        if (found.length === 0){
             res.status(404).json({
                 success: false,
                 message: 'prodotto non trovato'
@@ -146,6 +152,9 @@ function validateIdSlug(req, res, next) {
             return;
         }
     }
+} catch (error) {
+    throw error;
+}
     
     next();
 }
