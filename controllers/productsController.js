@@ -1,5 +1,5 @@
 import { db } from '../config/db.js';
-import { queryProductIndex, queryProductShow } from '../src/utils/query.js';
+import { queryProductIndex, queryProductShow, queryProductsFive } from '../src/utils/query.js';
 
 
 
@@ -58,4 +58,28 @@ export async function show(request, response) {
                 result: null
             });
     }
+};
+
+/*
+SHOW Five (home)
+*/
+export async function showFive(request, response) {
+    try {
+        const [result] = await db.query(queryProductsFive);
+        response
+            .json({
+                error: null,
+                result: result
+            });
+
+    } catch (error) {
+        console.error(error);
+        response
+            .status(500)
+            .json({
+                error: "Errore nell'esecuzione della richiesta",
+                result: null
+            });
+    }
+    
 };

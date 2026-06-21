@@ -67,6 +67,25 @@ export const queryProductIndex =
         ON categories.id = pc.id_category;
     `
 
+export const queryProductsFive =
+    `SELECT 
+        products.id,
+        products.name, 
+        products.description, 
+        products.slug, 
+        products.img, 
+        products.price, 
+        products.discount,
+        products.created_at,
+        categories.name as category  
+    FROM products
+    JOIN product_category AS pc
+        ON pc.id_product = products.id
+    JOIN categories
+        ON categories.id = pc.id_category
+    WHERE products.discount = 0
+    LIMIT 5;
+    `
 
 export const queryProductShow = 
     `
