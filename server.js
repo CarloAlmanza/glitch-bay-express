@@ -20,10 +20,9 @@ app.use('/products', productsRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/invoices', invoicesRoutes);
 app.use('/users', usersRoutes);
-
+app.use("/img", express.static("data/img"));
 app.use(errorsHandler);
 app.use(notFound);
-app.use("/img", express.static("data/img"));
 app.listen(server_port, (error) => {
     if (error) {
         console.error(`ERRORE: la porta ${server_port} è già in utilizzo`);
