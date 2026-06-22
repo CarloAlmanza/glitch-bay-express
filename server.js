@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {db} from './config/db.js';
+import { db } from './config/db.js';
 import productsRoutes from './routes/products.js';
 import categoriesRoutes from './routes/categories.js';
 import invoicesRoutes from './routes/invoices.js';
@@ -20,7 +20,7 @@ app.use('/products', productsRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/invoices', invoicesRoutes);
 app.use('/users', usersRoutes);
-
+app.use("/img", express.static("data/img"));
 app.use(errorsHandler);
 app.use(notFound);
 app.listen(server_port, (error) => {
