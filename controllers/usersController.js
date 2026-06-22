@@ -10,7 +10,7 @@ INDEX
 */
 async function index(request, response) {
     try {
-        const [result] = await connection.query(queryCatIndex);
+        const [result] = await db.query(queryCatIndex);
         response
             .json({
                 error: null,
@@ -35,7 +35,7 @@ SHOW
 async function show(request, response) {
     const id = request.params.id
     try {
-        const [result] = await connection.execute(queryUserShow, [id]);
+        const [result] = await db.execute(queryUserShow, [id]);
         if(result.length === 0){
             response
                 .json({

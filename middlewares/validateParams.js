@@ -16,8 +16,8 @@ async function validateParams(req, res, next) {
     if (baseUrl === "products") {
         if (param.slug.trim() === '') {
             res.status(400).json({
-                error: false,
-                result: 'lo slug non può essere vuoto'
+                error: 'lo slug non può essere vuoto',
+                result: null
             });
             return;
         }
@@ -32,36 +32,30 @@ async function validateParams(req, res, next) {
 
         if (found.length === 0){
             res.status(404).json({
-                error: false,
-                result: 'prodotto non trovato'
+                error: 'prodotto non trovato',
+                result: null
             });
             return;
         }
         
         
     } else if (baseUrl === "categories"){
-        if (param.name.trim() === '') {
+        if (param.id.trim() === ''|| typeof Number(param.id.trim()) !== "number" || Number.isNaN(param.id) || param.id <= 0) {
             res.status(400).json({
-                error: false,
-                result: 'il nome della categoria non può essere vuoto'
-            });
-            return;
-        } else if (!isNaN(Number(param.name.trim()))) {
-            res.status(400).json({
-                error: false,
-                result: 'il nome della categoria non può essere un numero'
+                error: "l'ID della categoria deve essere un numero maggiore di 0",
+                result: null
             });
             return;
         }
 
         const result = catList.filter(element => {
-            return element.name === param.name;
+            return element.id === Number(param.id);
         });
 
         if (result.length === 0){
             res.status(404).json({
-                error: false,
-                result: 'categoria non trovata'
+                error: 'categoria non trovata',
+                result: null
             });
             return;
         }
@@ -70,14 +64,14 @@ async function validateParams(req, res, next) {
     } else if (baseUrl === "users"){ 
         if (param.id.trim() === '') {
             res.status(400).json({
-                error: false,
-                result: 'il campo id non può essere vuoto'
+                error: 'il campo id non può essere vuoto',
+                result: null
             });
             return;
         } else if (isNaN(Number(param.id.trim()))) {
             res.status(400).json({
-                error: false,
-                result: `l'id deve essere un numero`
+                error: `l'id deve essere un numero`,
+                result: null
             });
             return;
         }
@@ -89,22 +83,22 @@ async function validateParams(req, res, next) {
 
         if (result.length === 0){
             res.status(404).json({
-                error: false,
-                result: 'user non trovato'
+                error: 'user non trovato',
+                result: null
             });
             return;
         }
     }  else if (baseUrl === "invoices"){
         if (param.id.trim() === '') {
             res.status(400).json({
-                error: false,
-                result: 'il campo id non può essere vuoto'
+                error: 'il campo id non può essere vuoto',
+                result: null
             });
             return;
         } else if (isNaN(Number(param.id.trim()))) {
             res.status(400).json({
-                error: false,
-                result: `l'id deve essere un numero`
+                error: `l'id deve essere un numero`,
+                result: null
             });
             return;
         }
@@ -115,8 +109,8 @@ async function validateParams(req, res, next) {
 
         if (result.length === 0){
             res.status(404).json({
-                error: false,
-                result: 'invoice non trovata'
+                error: 'invoice non trovata',
+                result: null
             });
             return;
         }

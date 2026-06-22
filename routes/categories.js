@@ -6,7 +6,7 @@ import validateParams from '../middlewares/validateParams.js';
 const router = express.Router();
 
 router.get('/', index);
-router.get('/:name', validateParams, show);
+router.get('/:id', validateParams, show);
 // router.get('/:name/products', getProducts);
 
 export default router;

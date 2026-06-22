@@ -8,7 +8,7 @@ export const queryCatShow =
     `
     SELECT categories.id, categories.name, categories.description 
     FROM categories
-    WHERE categories.name = ?;
+    WHERE categories.id = ?;
     `
 
 export const queryInvoiceIndex = 
