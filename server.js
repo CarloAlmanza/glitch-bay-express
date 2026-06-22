@@ -13,6 +13,7 @@ const server_port = process.env.SERVER_PORT;
 const server_url = process.env.SERVER_URL;
 
 app.use(cors());
+app.use(express.static("data/imgs"))
 app.use(express.json());
 
 // Rotte
@@ -20,7 +21,6 @@ app.use('/products', productsRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/invoices', invoicesRoutes);
 app.use('/users', usersRoutes);
-app.use("/img", express.static("data/img"));
 app.use(errorsHandler);
 app.use(notFound);
 app.listen(server_port, (error) => {

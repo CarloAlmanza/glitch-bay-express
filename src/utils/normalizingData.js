@@ -20,7 +20,7 @@ function normalizingProducts(productsArray) {
             description,
             slug,
             category,
-            image: img ? `http://localhost:3000/${img}` : "https://placehold.co/600x400/png",
+            img: img ? `http://localhost:3000/${img}` : "https://placehold.co/600x400/png",
             price: Number(price),
             discount,
             created_at: created_at ? new Date(created_at).toLocaleDateString('it-IT') : null,
