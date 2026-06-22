@@ -33,15 +33,15 @@ async function index(request, response) {
 SHOW
 */
 async function show(request, response) {
-    const id = request.params.id
+    const searchedCategory = request.params.name;
     try {
-        const [result] = await connection.execute(queryCatShow, [id]);
-        const catategory = result[0]
+        const [result] = await connection.execute(queryCatShow, [searchedCategory]);
+        const category = result[0]
 
         response
             .json({
                 error: null,
-                result: catategory
+                result: category
             });
     } catch (error) {
         console.error(error);

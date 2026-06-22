@@ -5,6 +5,7 @@ import productsRoutes from './routes/products.js';
 import categoriesRoutes from './routes/categories.js';
 import invoicesRoutes from './routes/invoices.js';
 import usersRoutes from './routes/users.js';
+import notFound from './middlewares/notFound.js';
 
 const app = express();
 const server_port = process.env.SERVER_PORT;
@@ -19,6 +20,8 @@ app.use('/categories', categoriesRoutes);
 app.use('/invoices', invoicesRoutes);
 app.use('/users', usersRoutes);
 
+
+app.use(notFound);
 app.listen(server_port, (error) => {
     if (error) {
         console.error(`ERRORE: la porta ${server_port} è già in utilizzo`);
