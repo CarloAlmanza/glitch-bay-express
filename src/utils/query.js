@@ -1,24 +1,24 @@
-export const queryCatIndex = 
+export const queryCatIndex =
     `
     SELECT categories.id, categories.name, categories.description 
     FROM categories;
     `
 
-export const queryCatShow = 
+export const queryCatShow =
     `
     SELECT categories.id, categories.name, categories.description 
     FROM categories
     WHERE categories.id = ?;
     `
 
-export const queryInvoiceIndex = 
+export const queryInvoiceIndex =
     `
     SELECT * 
     FROM invoices 
     ORDER BY invoices.created_at DESC;
     `
 
-export const queryInvoiceShow = 
+export const queryInvoiceShow =
     `
     SELECT
             invoices.*,
@@ -48,7 +48,7 @@ export const queryInvoiceShow =
     `
 
 
-export const queryProductIndex = 
+export const queryProductIndex =
     `
     SELECT 
         products.id,
@@ -87,7 +87,7 @@ export const queryProductsFive =
     LIMIT 5;
     `
 
-export const queryProductShow = 
+export const queryProductShow =
     `
     SELECT 
         products.id,
@@ -108,7 +108,7 @@ export const queryProductShow =
     `
 
 
-export const queryUserIndex = 
+export const queryUserIndex =
     `
     SELECT 
         users.id, 
@@ -121,7 +121,7 @@ export const queryUserIndex =
     `
 
 
-export const queryUserShow = 
+export const queryUserShow =
     `
     SELECT 
         users.id, 
@@ -137,3 +137,23 @@ export const queryUserShow =
 export const querySelectSlugs =
     `SELECT p.slug
     FROM products p;`
+
+
+export const insertInvoice =
+    `
+    INSERT INTO invoices (total_amount, status, shipping_cost, tracking_number, payment_method)
+    VALUES (?, ?, ?, ?, ?);
+    `
+
+
+export const insertUser = 
+    `
+    INSERT INTO users (id_invoice, name, surname, mail, address, phone)
+    VALUES (?, ?, ?, ?, ?, ?);
+    `
+
+export const insertOrder = 
+    `
+    INSERT INTO product_invoice (id_product, id_invoice, paid, qty)
+    VALUES (?, ?, ?, ?);
+    `
