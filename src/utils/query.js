@@ -119,8 +119,7 @@ export const queryProductShow =
         products.price, 
         products.discount,
         products.created_at,
-        categories.name as category
-        categories.id as category_id  
+        categories.name as category 
     FROM products
     JOIN product_category AS pc
         ON pc.id_product = products.id

@@ -74,7 +74,8 @@ export async function show(request, response) {
             });
         }
         const normalized = normalizingProducts(result);
-
+        console.log(normalized);
+        
         response.json({ error: null, result: normalized[0] });
     } catch (error) {
         console.error(error);
