@@ -265,3 +265,14 @@ export function getTop5Products(invoiceListFormatted) {
         img: details.img
     }));
 }
+
+export function stringCheck(string) {
+    return typeof string === 'string' && string.trim() !== '';
+}
+
+
+
+export function orderKeyCheck(key){
+    const productKeysArray = ['id', 'name', 'slug', 'price', 'discount', 'created_at', 'category'];
+    return productKeysArray.includes(key);
+}

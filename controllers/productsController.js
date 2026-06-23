@@ -1,7 +1,7 @@
 import { db } from '../config/db.js';
 import { queryInvoiceIndex, queryProductIndex, queryProductShow, queryProductsFive } from '../src/utils/query.js';
 import normalizingProducts from '../src/utils/normalizingData.js';
-import { formatInvoices, getTop5Products } from '../src/utils/function.js';
+import { formatInvoices, getTop5Products, orderKeyCheck, stringCheck } from '../src/utils/function.js';
 
 
 
@@ -9,24 +9,54 @@ import { formatInvoices, getTop5Products } from '../src/utils/function.js';
 INDEX
 */
 export async function index(request, response) {
-    try {
-        const [result] = await db.query(queryProductIndex);
-        const normalized = normalizingProducts(result);
+    const category = request.category;
+    const { order, search } = request.query || {};
+    
+    const validatedSearch = stringCheck(search) ? search : null;
+    const validatedOrderKey = orderKeyCheck(order) ? order : null; 
 
-        response.json({
-            error: null,
-            result: normalized
-        });
-    } catch (error) {
-        console.error(error);
-        response
-            .status(500)
-            .json({
-                error: "Errore nell'esecuzione della richiesta",
+    let sql = queryProductIndex;
+    
+    const params = [];
+
+    if (validatedSearch) {
+        sql += ` AND products.name LIKE ?`;
+        params.push(`%${validatedSearch}%`);
+    }
+
+    if (category) {
+        sql += ` AND categories.name = ? `;
+        params.push(category);
+    }
+
+    if (validatedOrderKey) {
+        sql += ` ORDER BY products.${validatedOrderKey} DESC`; 
+    }
+
+    try {
+        const [result] = await db.query(sql, params);
+
+        if (result.length === 0) {
+            return response.json({
+                error: "Non ci sono prodotti che rispettano i parametri richiesti",
                 result: null
             });
+        }
+
+        const productList = normalizingProducts(result);
+        return response.json({
+            error: null,
+            result: productList
+        });
+
+    } catch (error) {
+        console.error(error);
+        return response.status(500).json({
+            error: "Errore nell'esecuzione della richiesta",
+            result: null
+        });
     }
-};
+}
 
 
 /*

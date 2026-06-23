@@ -84,8 +84,8 @@ export const queryProductIndex =
     JOIN product_category AS pc
         ON pc.id_product = products.id
     JOIN categories
-        ON categories.id = pc.id_category;
-    `
+        ON categories.id = pc.id_category
+    WHERE 1=1`
 
 export const queryProductsFive =
     `SELECT 
@@ -118,7 +118,8 @@ export const queryProductShow =
         products.price, 
         products.discount,
         products.created_at,
-        categories.name as category  
+        categories.name as category
+        categories.id as category_id  
     FROM products
     JOIN product_category AS pc
         ON pc.id_product = products.id
@@ -176,4 +177,11 @@ export const insertOrder =
     `
     INSERT INTO product_invoice (id_product, id_invoice, paid, qty)
     VALUES (?, ?, ?, ?);
+    `
+
+export const categoryCheckQuery = 
+    `
+    SELECT id, name
+    FROM categories
+    WHERE  id = ? 
     `
