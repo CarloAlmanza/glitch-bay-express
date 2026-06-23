@@ -8,4 +8,6 @@ const config = {
     database : process.env.DB_DATABASE
 };
 
+//nada
+
 export const db = await createConnection(config);
