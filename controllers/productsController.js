@@ -11,6 +11,9 @@ INDEX
 export async function index(request, response) {
     const category = request.category;
     const { order, search, direction } = request.query || {};
+    console.log(direction);
+    console.log(order);
+    
     
 
     
@@ -31,8 +34,10 @@ export async function index(request, response) {
         params.push(category);
     }
 
-    if (validatedOrderKey) {
-        sql += ` ORDER BY products.${validatedOrderKey} ${direction ? direction : 'DESC'}`; 
+    if (validatedOrderKey && direction === 'DESC') {
+        sql += ` ORDER BY products.${validatedOrderKey} DESC`; 
+    } else if (validatedOrderKey && direction === 'ASC') {
+        sql += ` ORDER BY products.${validatedOrderKey} ASC`;
     }
 
     try {
