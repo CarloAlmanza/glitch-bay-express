@@ -186,8 +186,8 @@ export const categoryCheckQuery =
     WHERE  id = ? 
     `
 
-    export const queryProductsByIds = `
-    SELECT id, name, price 
+export const queryProductsBySlugs = `
+    SELECT id, name, price, slug
     FROM products 
-    WHERE id IN (?);
+    WHERE slug IN (?);
 `;

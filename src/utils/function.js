@@ -9,7 +9,7 @@ const invoiceOBJ = {
     mail: '',
     address: '',
     phone: '',
-    products: [{ id: '', paid: '', qty: '' }]
+    products: [{ slug: '', paid: '', qty: '' }]
 }
 
 export function validatorKeys(json) {
@@ -83,8 +83,8 @@ export function validatorValues(json) {
     for (let i = 0; i < json.products.length; i++) {
         const prod = json.products[i];
 
-        if (typeof prod.id !== 'number' || isNaN(prod.id) || prod.id <= 0) {
-            return `Il campo 'id' del prodotto all'indice ${i} deve essere un numero maggiore di 0.`;
+        if (typeof prod.slug !== 'string' || prod.slug.trim() === '') {
+            return `Il campo 'slug' del prodotto all'indice ${i} deve essere una stringa valida.`;
         }
 
         if (typeof prod.paid !== 'number' || isNaN(prod.paid) || prod.paid <= 0) {
@@ -174,13 +174,13 @@ export function formatInvoices(rawData) {
                         const year = row.created_at.getFullYear();
                         formattedDate = `${day}/${month}/${year}`;
                     } else if (typeof row.created_at === 'string') {
-                        const datePart = row.created_at.split(' ')[0]; 
+                        const datePart = row.created_at.split(' ')[0];
                         const parts = datePart.split('-');
                         if (parts.length === 3) {
                             const [year, month, day] = parts;
                             formattedDate = `${day}/${month}/${year}`;
                         } else {
-                            formattedDate = row.created_at; 
+                            formattedDate = row.created_at;
                         }
                     }
                 }
@@ -237,7 +237,7 @@ export function getTop5Products(invoiceListFormatted) {
                 const qty = parseInt(product.qty, 10) || 0;
                 const price = product.price;
                 const img = product.img;
-                const discountedPrice = parseFloat(product.paid) || 0; 
+                const discountedPrice = parseFloat(product.paid) || 0;
                 if (name) {
                     if (!acc[name]) {
                         acc[name] = {
@@ -274,7 +274,7 @@ export function stringCheck(string) {
 
 
 
-export function orderKeyCheck(key){
+export function orderKeyCheck(key) {
     const productKeysArray = ['id', 'name', 'slug', 'price', 'discount', 'created_at', 'category'];
     return productKeysArray.includes(key);
 }

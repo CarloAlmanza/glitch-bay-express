@@ -15,6 +15,7 @@ function normalizingProducts(productsArray) {
         } = product;
 
         return {
+            id,
             name,
             description,
             slug,
