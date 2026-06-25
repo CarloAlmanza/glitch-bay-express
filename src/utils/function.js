@@ -67,8 +67,15 @@ export function validatorValues(json) {
     if (typeof json.lastName !== 'string' || json.lastName.trim() === '' || json.lastName.length > 100) {
         return "Il campo 'lastName' deve essere una stringa non vuota e non superiore a 100 caratteri.";
     }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (typeof json.mail !== 'string' || json.mail.trim() === '') {
         return "Il campo 'mail' deve essere una stringa non vuota.";
+    }
+    if (!emailRegex.test(json.mail)) {
+        return "Il formato dell'indirizzo email non è valido (es. esempio@dominio.com).";
+    }
+    if (json.mail.length > 255) { // Controllo di sicurezza standard per la lunghezza nei DB
+        return "L'indirizzo email non può superare i 255 caratteri.";
     }
     if (typeof json.address !== 'string' || json.address.trim() === '') {
         return "Il campo 'address' deve essere una stringa non vuota.";
