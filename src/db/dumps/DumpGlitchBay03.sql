@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `glitch_bay` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `glitch_bay`;
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: glitch_bay
 -- ------------------------------------------------------
--- Server version	8.4.7
+-- Server version	8.4.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -52,14 +52,14 @@ DROP TABLE IF EXISTS `invoices`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `invoices` (
   `id` mediumint unsigned NOT NULL AUTO_INCREMENT,
-  `total_amount` decimal(6,2) NOT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
   `status` enum('paid','unpaid') NOT NULL DEFAULT 'unpaid',
   `shipping_cost` decimal(4,2) NOT NULL DEFAULT '9.99',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `tracking_number` char(15) NOT NULL,
   `payment_method` enum('stripe','paypal','crypto') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `invoices` (
 
 LOCK TABLES `invoices` WRITE;
 /*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-INSERT INTO `invoices` VALUES (1,224.10,'paid',9.99,'2026-06-10 08:30:00','IT9384729104823','paypal'),(2,562.50,'paid',0.00,'2026-06-11 12:15:00','IT1029384756102','stripe'),(3,110.00,'paid',9.99,'2026-06-12 07:00:00','IT5564738291034','crypto'),(4,2500.00,'paid',0.00,'2026-06-12 16:45:00','IT4829103948571','stripe'),(5,346.00,'paid',0.00,'2026-06-14 09:20:00','IT2938471029384','paypal'),(6,114.00,'paid',9.99,'2026-06-15 14:00:00','IT3049582102938','stripe'),(7,450.55,'paid',0.00,'2026-06-16 19:10:00','IT8837461920394','crypto'),(8,89.00,'paid',9.99,'2026-06-17 11:05:00','IT7746352910293','paypal'),(9,308.75,'paid',0.00,'2026-06-18 06:30:00','IT1928374655647','stripe'),(10,193.25,'paid',9.99,'2026-06-19 12:22:00','IT5049382716253','paypal');
+INSERT INTO `invoices` VALUES (1,224.10,'paid',9.99,'2026-06-10 08:30:00','IT9384729104823','paypal'),(2,562.50,'paid',0.00,'2026-06-11 12:15:00','IT1029384756102','stripe'),(3,110.00,'paid',9.99,'2026-06-12 07:00:00','IT5564738291034','crypto'),(4,2500.00,'paid',0.00,'2026-06-12 16:45:00','IT4829103948571','stripe'),(5,346.00,'paid',0.00,'2026-06-14 09:20:00','IT2938471029384','paypal'),(6,114.00,'paid',9.99,'2026-06-15 14:00:00','IT3049582102938','stripe'),(7,450.55,'paid',0.00,'2026-06-16 19:10:00','IT8837461920394','crypto'),(8,89.00,'paid',9.99,'2026-06-17 11:05:00','IT7746352910293','paypal'),(9,308.75,'paid',0.00,'2026-06-18 06:30:00','IT1928374655647','stripe'),(10,193.25,'paid',9.99,'2026-06-19 12:22:00','IT5049382716253','paypal'),(11,747.00,'paid',0.00,'2026-06-23 08:46:44','IT4253505857235','stripe'),(12,747.00,'paid',0.00,'2026-06-24 10:05:19','IT4363323069518','stripe'),(13,747.00,'paid',0.00,'2026-06-24 10:11:26','IT8611746291947','stripe'),(14,747.00,'paid',0.00,'2026-06-24 11:04:58','IT6867517852101','stripe'),(15,747.00,'paid',0.00,'2026-06-24 11:05:22','IT2009820952691','stripe'),(16,672.30,'paid',0.00,'2026-06-24 11:08:11','IT5755287877054','stripe'),(17,672.30,'paid',0.00,'2026-06-24 11:15:29','IT7571521475716','stripe'),(18,672.30,'paid',0.00,'2026-06-24 11:22:50','IT5707568704251','stripe'),(19,672.30,'paid',0.00,'2026-06-24 11:27:14','IT2895441371618','stripe'),(20,672.30,'paid',0.00,'2026-06-24 11:30:59','IT7505747304456','stripe'),(21,672.30,'paid',0.00,'2026-06-24 13:40:48','IT1364654248066','stripe'),(22,4405.00,'paid',0.00,'2026-06-24 17:22:52','IT9726683351857','stripe'),(23,1206.50,'paid',0.00,'2026-06-24 19:16:33','IT5729703912861','stripe'),(24,470.00,'paid',0.00,'2026-06-24 19:19:38','IT9820689976397','stripe'),(25,2134.00,'paid',0.00,'2026-06-25 07:33:18','IT0011008363013','stripe'),(26,1441.50,'paid',0.00,'2026-06-25 08:07:23','IT7495139238622','stripe'),(27,1197.50,'paid',0.00,'2026-06-25 21:52:17','IT3995871987715','stripe');
 /*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +124,7 @@ CREATE TABLE `product_invoice` (
 
 LOCK TABLES `product_invoice` WRITE;
 /*!40000 ALTER TABLE `product_invoice` DISABLE KEYS */;
-INSERT INTO `product_invoice` VALUES (1,1,224.10,1),(2,8,89.00,1),(11,2,180.00,1),(12,9,213.75,1),(14,3,65.00,1),(16,2,382.50,1),(18,5,117.00,1),(22,7,342.00,1),(23,5,210.00,1),(25,4,2500.00,1),(32,10,115.00,1),(34,10,45.00,1),(35,6,39.00,1),(40,3,45.00,1),(45,7,84.55,1),(48,6,75.00,1),(49,9,95.00,1),(52,7,24.00,1),(54,5,19.00,1),(55,10,33.25,1);
+INSERT INTO `product_invoice` VALUES (1,1,224.10,1),(1,11,249.00,3),(1,12,249.00,3),(1,13,249.00,3),(1,14,249.00,3),(1,15,249.00,3),(1,16,224.10,3),(1,17,224.10,3),(1,18,224.10,3),(1,19,224.10,3),(1,20,224.10,3),(1,21,224.10,3),(2,8,89.00,1),(11,2,180.00,1),(12,9,213.75,1),(14,3,65.00,1),(16,2,382.50,1),(18,5,117.00,1),(20,23,290.00,1),(20,26,290.00,1),(21,23,104.50,2),(21,25,104.50,1),(21,26,104.50,1),(22,7,342.00,1),(22,25,342.00,1),(23,5,210.00,1),(23,24,210.00,1),(24,24,125.00,1),(24,26,125.00,1),(25,4,2500.00,1),(25,22,2500.00,1),(26,22,185.00,2),(26,23,185.00,1),(26,25,185.00,1),(26,27,185.00,1),(27,22,522.50,2),(27,23,522.50,1),(27,25,522.50,1),(27,27,522.50,1),(28,22,490.00,1),(28,25,490.00,2),(28,26,490.00,1),(28,27,490.00,1),(29,26,432.00,1),(32,10,115.00,1),(34,10,45.00,1),(35,6,39.00,1),(38,24,135.00,1),(40,3,45.00,1),(45,7,84.55,1),(48,6,75.00,1),(49,9,95.00,1),(52,7,24.00,1),(54,5,19.00,1),(55,10,33.25,1);
 /*!40000 ALTER TABLE `product_invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +178,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_id_invoice_unique` (`id_invoice`),
   CONSTRAINT `users_id_invoice_foreign` FOREIGN KEY (`id_invoice`) REFERENCES `invoices` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'Alessandro','Rossi','alessandro.rossi@email.it','Via Roma 12, Milano','+39 333 1234567'),(2,2,'Elena','Bianchi','elena.bianchi@email.it','Via Torino 45, Torino','+39 347 9876543'),(3,3,'Marco','Verdi','marco.verdi@email.it','Corso Vittorio Emanuele 89, Napoli','+39 328 5554433'),(4,4,'Giulia','Ferrari','giulia.ferrari@email.it','Via della Moscova 3, Milano','+39 349 1112233'),(5,5,'Luca','Russo','luca.russo@email.it','Via Pisacane 14, Firenze','+39 335 4433221'),(6,6,'Chiara','Romano','chiara.romano@email.it','Piazza Navona 22, Roma','+39 331 7788990'),(7,7,'Roberto','Gallo','roberto.gallo@email.it','Via dei Mille 7, Genova','+39 340 6655443'),(8,8,'Francesca','Conti','francesca.conti@email.it','Via Dante 101, Bologna','+39 329 8877665'),(9,9,'Stefano','Marini','stefano.marini@email.it','Via San Francesco 54, Padova','+39 345 2233445'),(10,10,'Silvia','Ricci','silvia.ricci@email.it','Viale dei Giardini 12, Palermo','+39 338 9988776');
+INSERT INTO `users` VALUES (1,1,'Alessandro','Rossi','alessandro.rossi@email.it','Via Roma 12, Milano','+39 333 1234567'),(2,2,'Elena','Bianchi','elena.bianchi@email.it','Via Torino 45, Torino','+39 347 9876543'),(3,3,'Marco','Verdi','marco.verdi@email.it','Corso Vittorio Emanuele 89, Napoli','+39 328 5554433'),(4,4,'Giulia','Ferrari','giulia.ferrari@email.it','Via della Moscova 3, Milano','+39 349 1112233'),(5,5,'Luca','Russo','luca.russo@email.it','Via Pisacane 14, Firenze','+39 335 4433221'),(6,6,'Chiara','Romano','chiara.romano@email.it','Piazza Navona 22, Roma','+39 331 7788990'),(7,7,'Roberto','Gallo','roberto.gallo@email.it','Via dei Mille 7, Genova','+39 340 6655443'),(8,8,'Francesca','Conti','francesca.conti@email.it','Via Dante 101, Bologna','+39 329 8877665'),(9,9,'Stefano','Marini','stefano.marini@email.it','Via San Francesco 54, Padova','+39 345 2233445'),(10,10,'Silvia','Ricci','silvia.ricci@email.it','Viale dei Giardini 12, Palermo','+39 338 9988776'),(11,11,'ALberto','Pacciani','ilmostroseitu@nonmiprendete.tie','via della sfiga 45','+39 123 1234567'),(12,12,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(13,13,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(14,14,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(15,15,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(16,16,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(17,17,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(18,18,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(19,19,'ALberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(20,20,'Alberto','Pacciani','maurizio.palmisano0@gmail.com','via della sfiga 45','+39 123 1234567'),(21,21,'Alberto','Pacciani','torricelligiorgio7@gmail.com','via della sfiga 45','+39 123 1234567'),(22,22,'pippo','Franco','maurizio.palmisano0@gmail.com','via de gasperi 89','+39 123 1234567'),(23,23,'Mimmo','Castagna','maurizio.palmisano0@gmail.com','dsasjaslakjs','+39 123 1234567'),(24,24,'dawdasdawd','awdsawd','maurizio.palmisano0@gmail.com','adsdawda','+39 123 1234567'),(25,25,'Filippo','Giove','francescofloris.ef@gmail.com','fatti i fatti tuoi','+39 123 1234567'),(26,26,'maurizio','costantino','maurizio.palmisano0@gmail.com','dhciawgdkj\\bsc','+39 123 1234567'),(27,27,'Maurizio','Palmisano','maurizio.palmisano0@gmail.com','casa mia ','+39 333 4441111');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -200,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-22 17:00:26
+-- Dump completed on 2026-06-26 10:50:53
