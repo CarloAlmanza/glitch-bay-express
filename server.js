@@ -5,6 +5,7 @@ import productsRoutes from './routes/products.js';
 import categoriesRoutes from './routes/categories.js';
 import invoicesRoutes from './routes/invoices.js';
 import usersRoutes from './routes/users.js';
+import agent from './routes/agent.js';
 import notFound from './middlewares/notFound.js';
 import errorsHandler from './middlewares/errorsHandler.js';
 
@@ -17,6 +18,7 @@ app.use(express.static("data/imgs"));
 app.use(express.json());
 
 // Rotte
+app.use('/agent', agent)
 app.use('/products', productsRoutes);
 app.use('/categories', categoriesRoutes);
 app.use('/invoices', invoicesRoutes);
